@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" font-family="-apple-system,Helvetica,sans-serif" font-size="13">
+  <rect width="720" height="300" fill="#fff"/>
+  <g stroke="#d1d5db" stroke-width="1.5" fill="#f5f5f7">
+    <rect x="40" y="40" width="180" height="60" rx="12"/>
+    <rect x="270" y="40" width="180" height="60" rx="12"/>
+    <rect x="500" y="40" width="180" height="60" rx="12"/>
+    <rect x="270" y="150" width="180" height="60" rx="12"/>
+    <rect x="500" y="150" width="180" height="60" rx="12"/>
+    <rect x="40" y="150" width="180" height="60" rx="12"/>
+  </g>
+  <g fill="#1d1d1f" text-anchor="middle">
+    <text x="130" y="65" font-weight="600">PlainApp</text><text x="130" y="84" fill="#6e6e73">DocumentGroup</text>
+    <text x="360" y="65" font-weight="600">EditorView</text><text x="360" y="84" fill="#6e6e73">TextEditor + footer</text>
+    <text x="590" y="65" font-weight="600">TextDocument</text><text x="590" y="84" fill="#6e6e73">FileDocument, UTF-8</text>
+    <text x="360" y="175" font-weight="600">Stats</text><text x="360" y="194" fill="#6e6e73">lines / words / graphemes</text>
+    <text x="590" y="175" font-weight="600">Checks/main.swift</text><text x="590" y="194" fill="#6e6e73">swiftc asserts</text>
+    <text x="130" y="175" font-weight="600">cli/main.swift</text><text x="130" y="194" fill="#6e6e73">plain &lt;file&gt; · plain stat</text>
+  </g>
+  <g stroke="#1d1d1f" stroke-width="1.5" fill="none">
+    <path d="M220 70 H270"/><path d="M450 70 H500"/>
+    <path d="M360 100 V150"/><path d="M220 180 H270"/><path d="M450 180 H500"/>
+  </g>
+  <text x="360" y="270" text-anchor="middle" fill="#6e6e73">One target, iOS + macOS. Everything above the Stats row is framework.</text>
+</svg>

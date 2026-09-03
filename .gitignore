@@ -1,0 +1,6 @@
+.asc/artifacts/
+.asc/release/
+.asc/runs/
+.asc/reports/
+*.xcodeproj
+/build
