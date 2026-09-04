@@ -11,6 +11,7 @@ struct TextDocument: FileDocument {
     static var writableContentTypes: [UTType] { readableContentTypes }
 
     var text = ""
+    var type: UTType = .plainText
 
     init() {}
 
@@ -19,6 +20,7 @@ struct TextDocument: FileDocument {
         // ponytail: UTF-8 or bust. Latin-1 fallback is the only other encoding worth adding.
         guard let s = String(data: data, encoding: .utf8) else { throw CocoaError(.fileReadInapplicableStringEncoding) }
         text = s
+        type = configuration.contentType
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {

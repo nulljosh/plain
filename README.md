@@ -18,6 +18,10 @@ Live at [plain.heyitsmejosh.com](https://plain.heyitsmejosh.com).
 
 Plain opens a text file, a Markdown file, or a source file and lets you type. No preview, no highlighting: the file is a string and stays one. Mac and iPhone and iPad, one codebase. Autosave, versions, iCloud, Open Recent, tabs, undo and redo all come from the system. The app adds a monospaced toggle, a font size, and a line/word/character count in the corner.
 
+Open a `.md` and headings, emphasis, links and code spans get colour. Open a `.swift`, `.py`, `.js` or anything else that counts as source and keywords, strings, numbers and comments do. Same string, same text view; the colour is attributes on it, not a rendering layer. Plain `.txt` stays plain.
+
+On the Mac, press ⌘↩ in a code file and Plain asks a model running on your machine (Ollama, `qwen2.5-coder` by default) to fill in at the cursor. Nothing leaves the computer. No Ollama, no button does anything.
+
 The command line side opens a file in the app or counts it.
 
 ```
@@ -33,7 +37,8 @@ David Bushell tried canvas, then contenteditable, then a textarea, and landed on
 ## Run it
 
 ```
-cd ios && xcodegen generate && open Plain.xcodeproj
+cd ios && xcodegen generate && open Plain.xcodeproj                  # needs macOS 26 / iOS 26
+ollama pull qwen2.5-coder:1.5b-base                                    # optional, for ⌘↩
 swiftc -O -o plain ios/App/Stats.swift cli/main.swift      # the CLI
-swiftc -o /tmp/c ios/App/Stats.swift ios/Checks/main.swift && /tmp/c   # self-check
+swiftc -o /tmp/c ios/App/Stats.swift ios/App/Highlight.swift ios/Checks/main.swift && /tmp/c   # self-check
 ```
