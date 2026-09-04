@@ -15,16 +15,24 @@ struct TextDocument: FileDocument {
 
     init() {}
 
+    init(data: Data, type: UTType) {
+        // UTF-8 first; anything else decodes with replacement characters, so opening never fails on encoding.
+        text = String(data: data, encoding: .utf8) ?? String(decoding: data, as: UTF8.self)
+        self.type = type
+    }
+
+    var data: Data {
+        if type.conforms(to: .json) { Config.apply(text) }   // saving the settings file applies it
+        return Data(text.utf8)
+    }
+
     init(configuration: ReadConfiguration) throws {
-        guard let data = configuration.file.regularFileContents else { throw CocoaError(.fileReadCorruptFile) }
-        // ponytail: UTF-8 or bust. Latin-1 fallback is the only other encoding worth adding.
-        guard let s = String(data: data, encoding: .utf8) else { throw CocoaError(.fileReadInapplicableStringEncoding) }
-        text = s
-        type = configuration.contentType
+        // A directory or a symlink has no regular contents; say so instead of showing an empty editor.
+        guard let d = configuration.file.regularFileContents else { throw CocoaError(.fileReadCorruptFile) }
+        self.init(data: d, type: configuration.contentType)
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        if type.conforms(to: .json) { Config.apply(text) }   // saving the settings file applies it
-        return FileWrapper(regularFileWithContents: Data(text.utf8))
+        FileWrapper(regularFileWithContents: data)
     }
 }

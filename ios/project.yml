@@ -30,11 +30,29 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Plain.entitlements
         CODE_SIGN_ENTITLEMENTS[sdk=macosx*]: Plain-macOS.entitlements
 
+  PlainTests:
+    type: bundle.unit-test
+    supportedDestinations: [iOS, macOS]
+    sources:
+      - path: Tests
+    dependencies:
+      - target: Plain
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nulljosh.plain.tests
+        "TEST_HOST[sdk=macosx*]": $(BUILT_PRODUCTS_DIR)/Plain.app/Contents/MacOS/Plain
+        GENERATE_INFOPLIST_FILE: YES
+        DEVELOPMENT_TEAM: QMM486NPYC
+
 schemes:
   Plain:
     build:
       targets:
         Plain: all
+        PlainTests: [test]
+    test:
+      targets:
+        - PlainTests
     run:
       config: Debug
     archive:

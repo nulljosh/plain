@@ -7,6 +7,7 @@ struct EditorView: View {
     @State private var text = AttributedString()
     @State private var selection = AttributedTextSelection()
     @State private var completing = false
+    @State private var notice: String?
 
     private var highlighter: Highlighter { Highlighter(type: document.type, size: fontSize, monospaced: monospaced) }
 
@@ -48,9 +49,15 @@ struct EditorView: View {
         completing = true
         Task {
             defer { completing = false }
-            guard let out = try? await Complete.fill(prefix: String(s[..<k]), suffix: String(s[k...])), !out.isEmpty,
-                  case .insertionPoint(let j) = selection.indices(in: text) else { return }
-            text.transform(updating: &selection) { $0.insert(AttributedString(out), at: j) }
+            do {
+                let out = try await Complete.fill(prefix: String(s[..<k]), suffix: String(s[k...]))
+                guard case .insertionPoint(let j) = selection.indices(in: text) else { return }
+                text.transform(updating: &selection) { $0.insert(AttributedString(out), at: j) }
+            } catch {
+                notice = error.localizedDescription
+                try? await Task.sleep(for: .seconds(4))
+                notice = nil
+            }
         }
     }
 
@@ -60,10 +67,12 @@ struct EditorView: View {
     }
 
     private var footer: some View {
-        Text(Stats(document.text).summary)
-            .font(.footnote.monospacedDigit())
-            .foregroundStyle(.secondary)
-            .frame(maxWidth: .infinity, alignment: .trailing)
+        HStack {
+            if let notice { Text(notice).foregroundStyle(.red).lineLimit(1) }
+            Spacer()
+            Text(Stats(document.text).summary).monospacedDigit().foregroundStyle(.secondary)
+        }
+            .font(.footnote)
             .padding(.horizontal, 16)
             .padding(.vertical, 6)
             .background(.bar)

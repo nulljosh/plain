@@ -13,7 +13,7 @@ enum Config {
 
     /// "#RRGGBB" from the config, falling back to the default.
     static func color(_ key: String) -> Color {
-        parse(UserDefaults.standard.string(forKey: key)) ?? parse(defaults[key] as? String)!   // bad hex: default
+        parse(UserDefaults.standard.string(forKey: key)) ?? parse(defaults[key] as? String) ?? .primary   // bad hex: default
     }
     private static func parse(_ hex: String?) -> Color? {
         guard let hex, hex.count == 7, hex.hasPrefix("#"), let v = UInt32(hex.dropFirst(), radix: 16) else { return nil }
@@ -35,7 +35,15 @@ enum Config {
     static func apply(_ text: String) -> Bool {
         guard let o = try? JSONSerialization.jsonObject(with: Data(text.utf8)) as? [String: Any],
               !Set(o.keys).isDisjoint(with: defaults.keys) else { return false }
-        for (k, v) in o where defaults[k] != nil { UserDefaults.standard.set(v, forKey: k) }
+        for (k, v) in o where defaults[k] != nil {
+            // Only take a value of the same shape as the default; a string where a number goes is ignored.
+            switch (defaults[k], v) {
+            case (is Double, let n as NSNumber): UserDefaults.standard.set(n.doubleValue, forKey: k)
+            case (is Bool, let b as Bool): UserDefaults.standard.set(b, forKey: k)
+            case (is String, let s as String): UserDefaults.standard.set(s, forKey: k)
+            default: continue
+            }
+        }
         return true
     }
 

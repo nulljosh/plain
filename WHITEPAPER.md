@@ -21,6 +21,8 @@ The app adds three things on top: a monospaced toggle, a font size stepper, and 
 
 `Highlight.swift` colours code and Markdown with a handful of regexes over the `AttributedString` the iOS 26 `TextEditor` edits natively: one keyword list for every language, whole file recoloured per keystroke. `Complete.swift` is a single POST to Ollama on localhost with a fill-in-the-middle prompt, wired to ⌘↩ on the Mac. Neither touches how text is drawn.
 
+Errors are surfaced, not swallowed: a completion that fails says why in the footer (Ollama down, model missing, bad reply), a file in any encoding opens, and a settings value of the wrong shape is ignored rather than crashing. `PlainTests` covers stats, colouring, document round-trips, config parsing and the completion error path.
+
 `Stats.swift` is the other logic. It counts lines, words and grapheme clusters. Grapheme, not UTF-16 units and not scalars, so a multi-codepoint emoji counts as one character. A trailing newline does not add a line. An empty file has one line.
 
 `ios/Checks/main.swift` runs six asserts over it with `swiftc`, no test framework.
