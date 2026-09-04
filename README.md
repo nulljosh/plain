@@ -22,6 +22,8 @@ Open a `.md` and headings, emphasis, links and code spans get colour. Open a `.s
 
 On the Mac, press ⌘↩ in a code file and Plain asks a model running on your machine (Ollama, `qwen2.5-coder` by default) to fill in at the cursor. Nothing leaves the computer. No Ollama, no button does anything.
 
+Settings are a text file. Launch Plain on the Mac with nothing to open and it opens `plain.json`: font size, monospaced, the completion model, and the five colours as hex. Edit, save, done. Like Sublime.
+
 The command line side opens a file in the app or counts it.
 
 ```
@@ -40,5 +42,5 @@ David Bushell tried canvas, then contenteditable, then a textarea, and landed on
 cd ios && xcodegen generate && open Plain.xcodeproj                  # needs macOS 26 / iOS 26
 ollama pull qwen2.5-coder:1.5b-base                                    # optional, for ⌘↩
 swiftc -O -o plain ios/App/Stats.swift cli/main.swift      # the CLI
-swiftc -o /tmp/c ios/App/Stats.swift ios/App/Highlight.swift ios/App/Complete.swift ios/Checks/main.swift && /tmp/c   # self-check
+swiftc -o /tmp/c ios/App/Stats.swift ios/App/Highlight.swift ios/App/Complete.swift ios/App/Config.swift ios/Checks/main.swift && /tmp/c   # self-check
 ```

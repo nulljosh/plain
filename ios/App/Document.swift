@@ -24,6 +24,7 @@ struct TextDocument: FileDocument {
     }
 
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        FileWrapper(regularFileWithContents: Data(text.utf8))
+        if type.conforms(to: .json) { Config.apply(text) }   // saving the settings file applies it
+        return FileWrapper(regularFileWithContents: Data(text.utf8))
     }
 }

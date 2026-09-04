@@ -1,4 +1,4 @@
-// Self-check. swiftc -o /tmp/plaincheck ios/App/Stats.swift ios/App/Highlight.swift ios/App/Complete.swift ios/Checks/main.swift && /tmp/plaincheck
+// Self-check. swiftc -o /tmp/plaincheck ios/App/Stats.swift ios/App/Highlight.swift ios/App/Complete.swift ios/App/Config.swift ios/Checks/main.swift && /tmp/plaincheck
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
@@ -15,14 +15,23 @@ check(Stats("  two\twords  ").words == 2, "whitespace split")
 var a = AttributedString("let x = 1 // hi")
 Highlighter(type: .swiftSource, size: 15, monospaced: false).apply(&a)
 let runs = a.runs.map { (String(a.characters[$0.range]), $0.foregroundColor) }
-check(runs.first?.0 == "let" && runs.first?.1 == .pink, "keyword coloured")
-check(runs.last?.0 == "// hi" && runs.last?.1 == .secondary, "comment coloured")
+check(runs.first?.0 == "let" && runs.first?.1 == Config.color("keywordColor"), "keyword coloured")
+check(runs.last?.0 == "// hi" && runs.last?.1 == Config.color("commentColor"), "comment coloured")
 var m = AttributedString("# Title\n`x`")
 Highlighter(type: .markdown, size: 15, monospaced: false).apply(&m)
 check(m.runs.first.map { String(m.characters[$0.range]) } == "# Title", "heading run")
 var t = AttributedString("let x")
 Highlighter(type: .plainText, size: 15, monospaced: false).apply(&t)
 check(t.runs.count == 1 && t.runs.first?.foregroundColor == nil, "plain text untouched")
+
+check(Config.apply(#"{"fontSize": 21, "junk": 1}"#) && UserDefaults.standard.double(forKey: "fontSize") == 21, "config applies known keys")
+check(!Config.apply("hello"), "prose is not config")
+check(!Config.apply(#"{"name": "x"}"#), "unrelated json is not config")
+UserDefaults.standard.removeObject(forKey: "fontSize")
+let defaultKeyword = Config.color("keywordColor")
+check(Config.apply(##"{"keywordColor": "#000000"}"##) && Config.color("keywordColor") == Color(red: 0, green: 0, blue: 0), "colour from config")
+check(Config.apply(#"{"keywordColor": "red"}"#) && Config.color("keywordColor") == defaultKeyword, "bad hex falls back to default")
+UserDefaults.standard.removeObject(forKey: "keywordColor")
 
 // Completion: only when Ollama is up, so the check still passes on a machine without it.
 if (try? Data(contentsOf: URL(string: "http://localhost:11434/api/version")!)) != nil {

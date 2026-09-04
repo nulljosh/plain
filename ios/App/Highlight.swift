@@ -11,7 +11,7 @@ extension UTType {
     static let markdown = UTType("net.daringfireball.markdown") ?? .plainText
     var kind: Kind {
         if conforms(to: .markdown) { return .markdown }
-        if conforms(to: .sourceCode) || conforms(to: .script) { return .code }
+        if conforms(to: .sourceCode) || conforms(to: .script) || conforms(to: .json) { return .code }
         return .text
     }
     var hashComments: Bool {
@@ -52,18 +52,18 @@ struct Highlighter {
         }
         switch type.kind {
         case .code:
-            paint(keywords, .pink)
-            paint(numbers, .orange)
-            paint(strings, .green)
-            paint(type.hashComments ? poundComments : slashComments, .secondary)
+            paint(keywords, Config.color("keywordColor"))
+            paint(numbers, Config.color("numberColor"))
+            paint(strings, Config.color("stringColor"))
+            paint(type.hashComments ? poundComments : slashComments, Config.color("commentColor"))
         case .text: break
         case .markdown:
-            paint(marker, .blue)
-            paint(link, .blue)
+            paint(marker, Config.color("linkColor"))
+            paint(link, Config.color("linkColor"))
             paint(italic, nil, base.italic())
             paint(bold, nil, base.bold())
             paint(heading, nil, base.bold())
-            paint(code, .secondary, .system(size: size, design: .monospaced))
+            paint(code, Config.color("commentColor"), .system(size: size, design: .monospaced))
         }
     }
 }
