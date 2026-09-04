@@ -53,6 +53,8 @@ pre { background: var(--bg2); border: 1px solid var(--border); border-radius: 8p
 .shots .device-iphone{--device-w:240px}
 .shots figure:has(.device-iphone){display:flex;flex-direction:column;align-items:center}
 .shots figcaption{margin-top:8px;font-size:.9rem;opacity:.7}
+.demo-editor{width:100%;height:220px;border:0;outline:0;resize:none;background:#fff;color:#1d1d1f;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;font-size:.95rem;line-height:1.6;padding:14px 16px;}
+.demo-status{display:flex;gap:1rem;padding:8px 16px;background:#fff;border-top:1px solid #e5e5e5;font-size:.8rem;color:#6e6e73;font-variant-numeric:tabular-nums;}
 footer { border-top: 1px solid var(--border); padding: 2.5rem 0; color: var(--text2); font-size: 0.9rem; }
 </style>
 </head>
@@ -88,7 +90,13 @@ footer { border-top: 1px solid var(--border); padding: 2.5rem 0; color: var(--te
   <section class="container">
     <h2>What it looks like</h2>
     <div class="shots">
-      <figure><div class="device device-mac has-chrome"><div class="device-screen"><img src="screenshots/mac.png" alt="Plain on Mac colouring a Swift file" loading="lazy"></div></div><figcaption>Mac. Colour for code, ⌘↩ to complete, counts in the corner.</figcaption></figure>
+      <figure>
+        <div class="device device-mac" data-title="Plain"><div class="device-screen">
+          <textarea class="demo-editor" id="demoText" spellcheck="false" placeholder="Type here. It's the real counter.">Open a file. Type. Done.</textarea>
+          <div class="demo-status" id="demoStatus">2 lines, 5 words, 25 chars</div>
+        </div></div>
+        <figcaption>This is the real counter, running in your browser. Type anything.</figcaption>
+      </figure>
       <figure><div class="device device-iphone"><div class="device-screen"><img src="screenshots/iphone.png" alt="Plain on iPhone" loading="lazy"></div></div><figcaption>iPhone. Files app in, Files app out.</figcaption></figure>
     </div>
   </section>
@@ -125,6 +133,26 @@ cat x | plain stat       counts from stdin</pre>
 
 <footer><div class="container">Plain · <a href="https://github.com/nulljosh/plain">GitHub</a> · MIT</div></footer>
 <script>
+// Same rules as ios/App/Stats.swift: empty doc is 1 line, no line for a trailing newline.
+(function () {
+  var t = document.getElementById('demoText'), s = document.getElementById('demoStatus');
+  if (!t || !s) return;
+  function graphemeCount(text) {
+    if (window.Intl && Intl.Segmenter) {
+      return [...new Intl.Segmenter().segment(text)].length;
+    }
+    return [...text].length;
+  }
+  function update() {
+    var text = t.value;
+    var lines = 1 + (text.match(/\n/g) || []).length - (text.endsWith('\n') ? 1 : 0);
+    var words = text.split(/\s+/).filter(Boolean).length;
+    s.textContent = lines + ' lines, ' + words + ' words, ' + graphemeCount(text) + ' chars';
+  }
+  t.addEventListener('input', update);
+  update();
+})();
+
 // Documents, cursors, pencils and text lines drifting behind the hero. Same field as nimble's.
 (function () {
   var field = document.getElementById('heroFloat');
