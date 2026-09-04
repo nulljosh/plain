@@ -5,8 +5,10 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct TextDocument: FileDocument {
+    // Markdown and code conform to plain text, so they open; listing them as writable
+    // is what keeps a .md or .swift file editable in place instead of read-only.
     static var readableContentTypes: [UTType] { [.plainText, .sourceCode, .text] }
-    static var writableContentTypes: [UTType] { [.plainText] }
+    static var writableContentTypes: [UTType] { readableContentTypes }
 
     var text = ""
 

@@ -16,12 +16,12 @@ Live at [plain.heyitsmejosh.com](https://plain.heyitsmejosh.com).
 
 ## What it does
 
-Plain opens a text file and lets you type. Mac and iPhone and iPad, one codebase. Autosave, versions, iCloud, Open Recent, tabs, undo and redo all come from the system. The app adds a monospaced toggle, a font size, and a line/word/character count in the corner.
+Plain opens a text file, a Markdown file, or a source file and lets you type. No preview, no highlighting: the file is a string and stays one. Mac and iPhone and iPad, one codebase. Autosave, versions, iCloud, Open Recent, tabs, undo and redo all come from the system. The app adds a monospaced toggle, a font size, and a line/word/character count in the corner.
 
 The command line side opens a file in the app or counts it.
 
 ```
-plain notes.txt          open in Plain
+plain notes.txt          open in Plain (.txt, .md, any code)
 plain stat notes.txt     3 lines, 12 words, 71 chars
 cat x | plain stat       counts from stdin
 ```
