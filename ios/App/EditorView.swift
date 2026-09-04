@@ -10,9 +10,18 @@ struct EditorView: View {
 
     private var highlighter: Highlighter { Highlighter(type: document.type, size: fontSize, monospaced: monospaced) }
 
+    // Colour once, before the editor ever sees the string: no programmatic edit on open, so no
+    // "Edited" flag and no cursor reset when a Mac tab comes back.
+    init(document: Binding<TextDocument>) {
+        _document = document
+        let d = UserDefaults.standard
+        var a = AttributedString(document.wrappedValue.text)
+        Highlighter(type: document.wrappedValue.type, size: d.object(forKey: "fontSize") as? Double ?? 15, monospaced: d.bool(forKey: "monospaced")).apply(&a)
+        _text = State(initialValue: a)
+    }
+
     var body: some View {
         TextEditor(text: $text, selection: $selection)
-            .onAppear { text = AttributedString(document.text); recolor() }
             // Colour lives in the view; the document stays a String.
             .onChange(of: text) { if String(text.characters) != document.text { document.text = String(text.characters); recolor() } }
             .onChange(of: document.text) { if String(text.characters) != document.text { text = AttributedString(document.text); recolor() } }  // undo, revert, iCloud

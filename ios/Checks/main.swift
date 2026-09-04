@@ -1,4 +1,4 @@
-// Self-check. swiftc -o /tmp/plaincheck ios/App/Stats.swift ios/App/Highlight.swift ios/Checks/main.swift && /tmp/plaincheck
+// Self-check. swiftc -o /tmp/plaincheck ios/App/Stats.swift ios/App/Highlight.swift ios/App/Complete.swift ios/Checks/main.swift && /tmp/plaincheck
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
@@ -23,4 +23,15 @@ check(m.runs.first.map { String(m.characters[$0.range]) } == "# Title", "heading
 var t = AttributedString("let x")
 Highlighter(type: .plainText, size: 15, monospaced: false).apply(&t)
 check(t.runs.count == 1 && t.runs.first?.foregroundColor == nil, "plain text untouched")
+
+// Completion: only when Ollama is up, so the check still passes on a machine without it.
+if (try? Data(contentsOf: URL(string: "http://localhost:11434/api/version")!)) != nil {
+    let sem = DispatchSemaphore(value: 0)
+    Task {
+        let out = try? await Complete.fill(prefix: "func add(a: Int, b: Int) -> Int {\n    ", suffix: "\n}")
+        check(out?.contains("a + b") == true, "completion fills the middle: \(out ?? "nil")")
+        sem.signal()
+    }
+    sem.wait()
+}
 print("ok")

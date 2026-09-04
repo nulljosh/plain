@@ -40,5 +40,5 @@ David Bushell tried canvas, then contenteditable, then a textarea, and landed on
 cd ios && xcodegen generate && open Plain.xcodeproj                  # needs macOS 26 / iOS 26
 ollama pull qwen2.5-coder:1.5b-base                                    # optional, for ⌘↩
 swiftc -O -o plain ios/App/Stats.swift cli/main.swift      # the CLI
-swiftc -o /tmp/c ios/App/Stats.swift ios/App/Highlight.swift ios/Checks/main.swift && /tmp/c   # self-check
+swiftc -o /tmp/c ios/App/Stats.swift ios/App/Highlight.swift ios/App/Complete.swift ios/Checks/main.swift && /tmp/c   # self-check
 ```
