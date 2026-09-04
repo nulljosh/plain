@@ -14,7 +14,7 @@ enum Complete {
             "model": model, "raw": true, "stream": false,
             "prompt": "<|fim_prefix|>\(prefix.suffix(4000))<|fim_suffix|>\(suffix.prefix(1000))<|fim_middle|>",
             "options": ["num_predict": 96, "temperature": 0.2,
-                        "stop": ["<|fim_prefix|>", "<|fim_suffix|>", "<|fim_middle|>", "<|endoftext|>", "<|file_sep|>"]],
+                        "stop": ["<|fim_prefix|>", "<|fim_suffix|>", "<|fim_middle|>", "<|endoftext|>", "<|file_sep|>", "\n\n"]],
         ])
         let (d, _) = try await URLSession.shared.data(for: r)
         return (try JSONSerialization.jsonObject(with: d) as? [String: Any])?["response"] as? String ?? ""
