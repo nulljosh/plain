@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plain — a text editor that writes no editor code</title>
+<meta name="description" content="A plain text editor for Mac, iPhone and iPad. Open a file, type, done. Autosave, undo, iCloud and versions come from the system. Plus a command line tool.">
+<meta name="theme-color" content="#1d1d1f">
+<meta property="og:title" content="Plain — a text editor">
+<meta property="og:description" content="Open a file, type, done. Mac, iPhone, iPad, and a command line.">
+<meta property="og:type" content="website">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+@import url("https://heyitsmejosh.com/tokens.css");
+@import url("devices.css");
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+a { color: var(--link, var(--accent)); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.container { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+.hero { padding: 6rem 0 4rem; text-align: center; }
+.hero-icon { width: 88px; height: 88px; border-radius: 20px; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.1; letter-spacing: -0.02em; margin-top: 1.25rem; }
+.tagline { color: var(--text2); font-size: 1.15rem; margin: 1rem auto 2rem; max-width: 30rem; }
+.cta { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+.btn { display: inline-block; padding: 0.7rem 1.5rem; border-radius: 6px; font-weight: 600; border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+.btn:hover { text-decoration: none; opacity: 0.9; }
+.btn.ghost { background: transparent; color: var(--link, var(--accent)); }
+section { padding: 4rem 0; border-top: 1px solid var(--border); }
+h2 { font-size: 1.5rem; letter-spacing: -0.01em; margin-bottom: 1rem; }
+p + p { margin-top: 1rem; }
+.grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 1.5rem; }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
+.card h3 { font-size: 1rem; margin-bottom: 0.35rem; }
+.card p { color: var(--text2); font-size: 0.95rem; }
+pre { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; overflow-x: auto; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.9rem; line-height: 1.5; margin-top: 1rem; }
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;align-items:start}
+.shots figure{margin:0}
+.shots .device{--device-w:100%;margin:0 auto}
+.shots .device-iphone{--device-w:240px}
+.shots figure:has(.device-iphone){display:flex;flex-direction:column;align-items:center}
+.shots figcaption{margin-top:8px;font-size:.9rem;opacity:.7}
+footer { border-top: 1px solid var(--border); padding: 2rem 0; color: var(--text2); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <img class="hero-icon" src="icon.svg" alt="Plain icon" width="88" height="88">
+    <h1>Plain</h1>
+    <p class="tagline">A text editor that writes no editor code. Open a file, type, done. Mac, iPhone, iPad, and a command line.</p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/nulljosh/plain">Source on GitHub</a>
+      <a class="btn ghost" href="#why">Why</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="why" class="container">
+    <h2>They don't make them like Sublime anymore</h2>
+    <p>Editors today are a div soup, a browser in a trench coat, or a subscription. Every one of them redraws the cursor by hand.</p>
+    <p>A text file is a string. Opening, saving, undo, selection, scrolling, dictation, VoiceOver: the OS already does all of that better than any JavaScript will. Plain is that idea taken all the way. No web view. No rendering layer. Nothing between you and the file.</p>
+  </section>
+
+  <section class="container">
+    <h2>What it looks like</h2>
+    <div class="shots">
+      <figure><div class="device device-mac has-chrome"><div class="device-screen"><img src="screenshots/mac.png" alt="Plain on Mac editing a text file" loading="lazy"></div></div><figcaption>Mac. Font size and monospace in the toolbar, counts in the corner.</figcaption></figure>
+      <figure><div class="device device-iphone"><div class="device-screen"><img src="screenshots/iphone.png" alt="Plain on iPhone" loading="lazy"></div></div><figcaption>iPhone. Files app in, Files app out.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>From the command line</h2>
+    <p>One binary. It opens a file in the app, or counts it.</p>
+<pre>plain notes.txt          open in Plain
+plain stat notes.txt     3 lines, 12 words, 71 chars
+cat x | plain stat       counts from stdin</pre>
+  </section>
+
+  <section class="container">
+    <h2>Everywhere you are</h2>
+    <div class="grid">
+      <div class="card"><h3>Mac</h3><p>Tabs, Open Recent, versions, autosave. All from the document system.</p></div>
+      <div class="card"><h3>iPhone &amp; iPad</h3><p>Any file in the Files app or iCloud Drive. Split view on iPad.</p></div>
+      <div class="card"><h3>Terminal</h3><p>Build it with one swiftc line. No package manager, no runtime.</p></div>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2>No accounts, no network</h2>
+    <p>Plain never talks to a server. There is nothing to sign into and nothing to collect. Your file is the only thing on disk.</p>
+  </section>
+</main>
+
+<footer><div class="container">Plain · <a href="https://github.com/nulljosh/plain">GitHub</a> · MIT</div></footer>
+</body>
+</html>

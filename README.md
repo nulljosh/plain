@@ -10,6 +10,10 @@ A text file is a string. Opening, saving, undo, selection, scrolling, accessibil
 
 That's the gap.
 
+Live at [plain.heyitsmejosh.com](https://plain.heyitsmejosh.com).
+
+<p><img src="screenshots/mac.png" width="560" alt="Plain on Mac"> <img src="screenshots/iphone.png" width="180" alt="Plain on iPhone"></p>
+
 ## What it does
 
 Plain opens a text file and lets you type. Mac and iPhone and iPad, one codebase. Autosave, versions, iCloud, Open Recent, tabs, undo and redo all come from the system. The app adds a monospaced toggle, a font size, and a line/word/character count in the corner.

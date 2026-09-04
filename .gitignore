@@ -4,3 +4,4 @@
 .asc/reports/
 *.xcodeproj
 /build
+landing/screenshots/
