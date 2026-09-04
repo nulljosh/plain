@@ -13,17 +13,29 @@
 <style>
 @import url("https://heyitsmejosh.com/tokens.css");
 @import url("devices.css");
+/* Palette from the icon, not the estate's yellow: graphite ink on cool grey. */
+:root{--ink:#1d1d1f;--paper:#f5f5f7;--accent:var(--ink);--link:var(--ink);--bg2:var(--paper);--border:#d2d2d7;--btn-fg:#fff;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--accent:var(--paper);--link:var(--paper);--bg2:#2c2c2e;--border:#3a3a3c;--btn-fg:var(--ink);}}
+:root[data-theme="dark"]{--accent:var(--paper);--link:var(--paper);--bg2:#2c2c2e;--border:#3a3a3c;--btn-fg:var(--ink);}
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 a { color: var(--link, var(--accent)); text-decoration: none; }
 a:hover { text-decoration: underline; }
 .container { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
-.hero { padding: 6rem 0 4rem; text-align: center; }
+.hero { position: relative; isolation: isolate; overflow: hidden; padding: 6rem 0 4rem; text-align: center; background: var(--bg2); }
+.hero .container { position: relative; z-index: 2; }
+.hero-float { position: absolute; inset: -48px; z-index: 0; color: var(--text); opacity: 0.32; pointer-events: none; user-select: none; }
+.float { position: absolute; width: var(--size); height: var(--size); margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2); animation: drift var(--dur, 16s) ease-in-out var(--delay, 0s) infinite alternate; }
+.float svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; animation: bob var(--bdur, 12s) ease-in-out var(--bdelay, 0s) infinite alternate; }
+@keyframes drift { to { transform: translate(var(--dx, 0px), var(--dy, 0px)); } }
+@keyframes bob { from { transform: rotate(calc(var(--rot, 0deg) * -1)); } to { transform: rotate(var(--rot, 0deg)); } }
+@media (prefers-reduced-motion: reduce) { .float, .float svg { animation: none; } }
+.hero::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 56% 50% at 50% 46%, var(--bg2) 20%, transparent 76%), linear-gradient(var(--bg2), transparent 14%, transparent 86%, var(--bg2)); }
 .hero-icon { width: 88px; height: 88px; border-radius: 20px; }
 h1 { font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.1; letter-spacing: -0.02em; margin-top: 1.25rem; }
 .tagline { color: var(--text2); font-size: 1.15rem; margin: 1rem auto 2rem; max-width: 30rem; }
 .cta { display: inline-flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
-.btn { display: inline-block; padding: 0.7rem 1.5rem; border-radius: 6px; font-weight: 600; border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+.btn { display: inline-block; padding: 0.7rem 1.5rem; border-radius: 6px; font-weight: 600; border: 1px solid var(--accent); background: var(--accent); color: var(--btn-fg); }
 .btn:hover { text-decoration: none; opacity: 0.9; }
 .btn.ghost { background: transparent; color: var(--link, var(--accent)); }
 section { padding: 4rem 0; border-top: 1px solid var(--border); }
@@ -45,7 +57,15 @@ footer { border-top: 1px solid var(--border); padding: 2rem 0; color: var(--text
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M9 3h2.5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9M15 3h-2.5"/><path d="M15 21h-2.5"/></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M13 8l3 3"/></symbol>
+  <symbol id="i-lines" viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h13"/></symbol>
+</svg>
+
 <header class="hero">
+  <div class="hero-float" id="heroFloat" aria-hidden="true"></div>
   <div class="container">
     <img class="hero-icon" src="icon.svg" alt="Plain icon" width="88" height="88">
     <h1>Plain</h1>
@@ -96,5 +116,38 @@ cat x | plain stat       counts from stdin</pre>
 </main>
 
 <footer><div class="container">Plain · <a href="https://github.com/nulljosh/plain">GitHub</a> · MIT</div></footer>
+<script>
+// Documents, cursors, pencils and text lines drifting behind the hero. Same field as nimble's.
+(function () {
+  var field = document.getElementById('heroFloat');
+  if (!field) return;
+  var rand = function (a, b) { return a + Math.random() * (b - a); };
+  var narrow = window.innerWidth < 640;
+  var icons = ['i-doc', 'i-cursor', 'i-pencil', 'i-lines'];
+  var edgeAt = function (x, y) { var nx = (x - 50) / 50, ny = (y - 50) / 50; return Math.min(1, Math.sqrt(nx * nx + ny * ny)); };
+  var cols = narrow ? 3 : Math.max(3, Math.min(7, Math.round(window.innerWidth / 190)));
+  var rows = narrow ? 5 : 4;
+  var minSize = narrow ? 18 : 28, maxSize = narrow ? 34 : 56;
+  for (var r = 0; r < rows; r++) {
+    for (var c = 0; c < cols; c++) {
+      var el = document.createElement('div');
+      var x = (c + rand(0.15, 0.85)) / cols * 100, y = (r + rand(0.15, 0.85)) / rows * 100;
+      el.className = 'float';
+      el.style.left = x.toFixed(2) + '%'; el.style.top = y.toFixed(2) + '%';
+      el.style.opacity = (0.3 + 0.7 * edgeAt(x, y)).toFixed(2);
+      el.style.setProperty('--size', rand(minSize, maxSize).toFixed(1) + 'px');
+      el.style.setProperty('--rot', rand(4, 10).toFixed(1) + 'deg');
+      el.style.setProperty('--bdur', rand(7, 16).toFixed(1) + 's');
+      el.style.setProperty('--bdelay', (-rand(0, 16)).toFixed(1) + 's');
+      var dx = rand(12, 26) * (Math.random() < 0.5 ? -1 : 1), dy = rand(10, 22) * (Math.random() < 0.5 ? -1 : 1);
+      el.style.setProperty('--dx', dx.toFixed(1) + 'px'); el.style.setProperty('--dy', dy.toFixed(1) + 'px');
+      el.style.setProperty('--dur', rand(12, 26).toFixed(1) + 's');
+      el.style.setProperty('--delay', (-rand(0, 26)).toFixed(1) + 's');
+      el.innerHTML = '<svg viewBox="0 0 24 24"><use href="#' + icons[Math.floor(Math.random() * icons.length)] + '"/></svg>';
+      field.appendChild(el);
+    }
+  }
+})();
+</script>
 </body>
 </html>
