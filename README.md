@@ -12,11 +12,11 @@ That's the gap.
 
 Live at [plain.heyitsmejosh.com](https://plain.heyitsmejosh.com).
 
-<p><img src="screenshots/mac.png" width="560" alt="Plain on Mac"> <img src="screenshots/iphone.png" width="180" alt="Plain on iPhone"></p>
+<p><img src="screenshots/mac.png" width="560" alt="Plain on Mac colouring a Swift file"> <img src="screenshots/iphone.png" width="180" alt="Plain on iPhone"></p>
 
 ## What it does
 
-Plain opens a text file, a Markdown file, or a source file and lets you type. No preview, no highlighting: the file is a string and stays one. Mac and iPhone and iPad, one codebase. Autosave, versions, iCloud, Open Recent, tabs, undo and redo all come from the system. The app adds a monospaced toggle, a font size, and a line/word/character count in the corner.
+Plain opens a text file, a Markdown file, or a source file and lets you type. No preview pane: the file is a string and stays one. Mac and iPhone and iPad, one codebase. Autosave, versions, iCloud, Open Recent, tabs, undo and redo all come from the system. The app adds a monospaced toggle, a font size, and a line/word/character count in the corner.
 
 Open a `.md` and headings, emphasis, links and code spans get colour. Open a `.swift`, `.py`, `.js` or anything else that counts as source and keywords, strings, numbers and comments do. Same string, same text view; the colour is attributes on it, not a rendering layer. Plain `.txt` stays plain.
 
