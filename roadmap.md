@@ -17,3 +17,4 @@
 ## Considered
 - Rewrite the Mac app in C/C++/Rust. No. It is already native (SwiftUI over AppKit's text view); the language is not where time goes. Revisit only if a measured hot path appears.
 - Web: type, edit and use Plain in the browser (a textarea plus the same regex colouring; keep the no-editor-code rule). Deferred; landing demo is sufficient for launch.
+- [ ] native (kmp) port — sibling apps have one, this doesn't (project-sync 2026-09-05)
