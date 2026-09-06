@@ -5,3 +5,4 @@
 *.xcodeproj
 /build
 landing/screenshots/
+.DS_Store
