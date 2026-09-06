@@ -16,8 +16,8 @@ struct TextDocument: FileDocument {
     init() {}
 
     init(data: Data, type: UTType) {
-        // UTF-8 first; anything else decodes with replacement characters, so opening never fails on encoding.
-        text = String(data: data, encoding: .utf8) ?? String(decoding: data, as: UTF8.self)
+        // UTF-8 first, then Latin-1 (never fails, so opening never fails on encoding). Saves back as UTF-8.
+        text = String(data: data, encoding: .utf8) ?? String(data: data, encoding: .isoLatin1) ?? String(decoding: data, as: UTF8.self)
         self.type = type
     }
 

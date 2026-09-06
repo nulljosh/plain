@@ -37,6 +37,7 @@ final class DocumentTests: XCTestCase {
     func read(_ d: Data, _ t: UTType = .plainText) -> TextDocument { TextDocument(data: d, type: t) }
     func testUTF8() { XCTAssertEqual(read(Data("héllo".utf8)).text, "héllo") }
     func testInvalidBytesStillOpen() { XCTAssertTrue(read(Data([0xff, 0xfe, 0x41])).text.hasSuffix("A")) }
+    func testLatin1Fallback() { XCTAssertEqual(read(Data([0x63, 0x61, 0x66, 0xe9])).text, "café") }
     func testEmpty() { XCTAssertEqual(read(Data()).text, "") }
     func testRoundTrip() throws {
         var d = TextDocument(); d.text = "a\nb"
