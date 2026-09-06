@@ -44,3 +44,7 @@ ollama pull qwen2.5-coder:1.5b-base                                    # optiona
 swiftc -O -o plain ios/App/Stats.swift cli/main.swift      # the CLI
 cd ios && xcodebuild test -scheme Plain -destination "platform=macOS" -quiet   # tests
 ```
+
+## Architecture
+
+<img src="architecture.svg" width="600">
