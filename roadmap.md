@@ -1,10 +1,8 @@
 # Plain roadmap
 
 ## Next
-- [x] ASC record as **Plaintxt** (6809841903, "Plain" taken by another account); iOS + macOS 1.0.0 submitted 2026-09-08
 - [ ] Line numbers (drop to NSTextView/UITextView via Representable)
 - [ ] Current line highlight
-- [x] Latin-1 read fallback when UTF-8 decode fails (2026-09-06)
 
 ## Done
 - 2026-09-03: v1.0.0 scaffold. DocumentGroup + TextEditor, iOS+macOS one target, CLI, Stats self-check.
