@@ -1,0 +1,33 @@
+// Release automation. Run: asc workflow run ship-ios VERSION:x.y.z
+{
+  "env": {
+    "IOS_APP_ID": "6809841903",
+    "VERSION": "",
+    "SUBMIT": "true"
+  },
+  "before_all": "asc auth status",
+  "workflows": {
+    "ship-ios": {
+      "description": "Bump, archive, upload, submit iOS",
+      "steps": [
+        {
+          "name": "bump",
+          "run": "asc xcode version edit --project ios/Plain.xcodeproj --version \"$VERSION\" --build-number \"$(date +%Y%m%d%H%M)\""
+        },
+        {
+          "name": "archive",
+          "run": "asc xcode archive --project ios/Plain.xcodeproj --scheme Plain --archive-path .asc/artifacts/Plain.xcarchive --overwrite --xcodebuild-flag=-skipPackagePluginValidation --xcodebuild-flag=-allowProvisioningUpdates --xcodebuild-flag=-destination --xcodebuild-flag=generic/platform=iOS --output json"
+        },
+        {
+          "name": "export",
+          "run": "asc xcode export --archive-path .asc/artifacts/Plain.xcarchive --export-options ExportOptions-iOS.plist --xcodebuild-flag=-allowProvisioningUpdates --overwrite --ipa-path .asc/artifacts/Plain.ipa --output json"
+        },
+        {
+          "name": "publish",
+          "if": "SUBMIT",
+          "run": "asc publish appstore --app $IOS_APP_ID --ipa .asc/artifacts/Plain.ipa --version $VERSION --wait --submit --confirm --output json"
+        }
+      ]
+    }
+  }
+}

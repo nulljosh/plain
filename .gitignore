@@ -6,3 +6,6 @@
 /build
 landing/screenshots/
 .DS_Store
+.asc/artifacts/
+.asc/signing/
+.asc/ss*/
