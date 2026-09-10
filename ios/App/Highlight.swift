@@ -27,6 +27,9 @@ private let poundComments = try! Regex(#"#.*"#)
 
 private let heading  = try! Regex(#"(?m)^#{1,6} .*$"#)
 private let bold     = try! Regex(#"\*\*[^*\n]+\*\*|__[^_\n]+__"#)
+// The trailing negative lookaheads keep italic from also matching inside bold:
+// `(?!\*)` stops `*text*` from firing on the second `*` of `**text**`, and
+// `(?!\w)` stops `_text_` from firing inside `snake_case_word`.
 private let italic   = try! Regex(#"\*[^*\n]+\*(?!\*)|_[^_\n]+_(?!\w)"#)
 private let code     = try! Regex(#"```[\s\S]*?```|`[^`\n]+`"#)
 private let link     = try! Regex(#"\[[^\]\n]*\]\([^)\n]*\)"#)
