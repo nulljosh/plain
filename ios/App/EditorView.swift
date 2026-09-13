@@ -38,7 +38,15 @@ struct EditorView: View {
             editorPane
             Divider()
             #if os(macOS)
-            ChatView(document: $document)
+            TabView {
+                ChatView(document: $document)
+                    .tabItem { Label("Agent", systemImage: "bubble.left") }
+                OutputPane(document: $document)
+                    .tabItem { Label("Output", systemImage: "square.and.pencil") }
+                TerminalPane()
+                    .tabItem { Label("Terminal", systemImage: "terminal") }
+            }
+            .frame(minHeight: 100, maxHeight: 250)
             #else
             EmptyView()
             #endif
