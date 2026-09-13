@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plain — a text editor that writes no editor code</title>
-<meta name="description" content="A plain text editor for Mac, iPhone and iPad. Open a text, Markdown or code file, type, done. Autosave, undo, iCloud and versions come from the system. Plus a command line tool.">
+<title>Plaintxt — a text editor that writes no editor code</title>
+<meta name="description" content="A plain text editor and agent IDE for Mac, iPhone and iPad. Open a text, Markdown or code file, type, done. Autosave, undo, iCloud and versions come from the system. Plus a command line tool.">
 <meta name="theme-color" content="#1d1d1f">
-<meta property="og:title" content="Plain — a text editor">
+<meta property="og:title" content="Plaintxt — a text editor">
 <meta property="og:description" content="Text, Markdown, code: open it, type, done. Mac, iPhone, iPad, and a command line.">
 <meta property="og:type" content="website">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -70,8 +70,8 @@ footer { border-top: 1px solid var(--border); padding: 2.5rem 0; color: var(--te
 <header class="hero">
   <div class="hero-float" id="heroFloat" aria-hidden="true"></div>
   <div class="container">
-    <img class="hero-icon" src="icon.svg" alt="Plain icon" width="88" height="88">
-    <h1>Plain</h1>
+    <img class="hero-icon" src="icon.svg" alt="Plaintxt icon" width="88" height="88">
+    <h1>Plaintxt</h1>
     <p class="tagline">Text editor + agent IDE. Syntax highlighting, on-save formatting, file browser, chat with your code. Mac, iPhone, iPad, and CLI.</p>
     <div class="cta">
       <a class="btn" href="https://github.com/nulljosh/plaintxt">Source on GitHub</a>
@@ -84,40 +84,39 @@ footer { border-top: 1px solid var(--border); padding: 2.5rem 0; color: var(--te
   <section id="why" class="container">
     <h2>They don't make them like Sublime anymore</h2>
     <p>Editors today are a div soup, a browser in a trench coat, or a subscription. Every one of them redraws the cursor by hand.</p>
-    <p>A text file is a string. Opening, saving, undo, selection, scrolling, dictation, VoiceOver: the OS already does all of that better than any JavaScript will. Plain is that idea taken all the way. No web view. No rendering layer. Nothing between you and the file.</p>
+    <p>A text file is a string. Opening, saving, undo, selection, scrolling, dictation, VoiceOver: the OS already does all of that better than any JavaScript will. Plaintxt is that idea taken all the way. No web view. No rendering layer. Nothing between you and the file.</p>
   </section>
 
   <section class="container">
     <h2>What it looks like</h2>
     <div class="shots">
       <figure>
-        <div class="device device-mac" data-title="Plain"><div class="device-screen">
+        <div class="device device-mac" data-title="Plaintxt"><div class="device-screen">
           <textarea class="demo-editor" id="demoText" spellcheck="false" placeholder="Type here. It's the real counter.">Open a file. Type. Done.</textarea>
           <div class="demo-status" id="demoStatus">2 lines, 5 words, 25 chars</div>
         </div></div>
         <figcaption>This is the real counter, running in your browser. Type anything.</figcaption>
       </figure>
-      <figure><div class="device device-iphone"><div class="device-screen"><img src="screenshots/iphone.png" alt="Plain on iPhone" loading="lazy"></div></div><figcaption>iPhone. Files app in, Files app out.</figcaption></figure>
     </div>
   </section>
 
   <section class="container">
     <h2>Colour, and a little help</h2>
     <p>Open a Markdown file and headings, emphasis, links and code spans get colour. Open source code and keywords, strings, numbers and comments do. It is attributes on the same string in the same system text view, not a rendering layer. Plain text stays plain.</p>
-    <p>On the Mac, press ⌘↩ in a code file and Plain asks a model running on your own machine (Ollama) to fill in at the cursor. Nothing leaves the computer. No Ollama, no harm done.</p>
-    <p>Settings are a text file. Launch Plain with nothing to open and it opens <code>plain.json</code>: font size, monospaced, the completion model, and the five colours as hex. Edit, save, done. Like Sublime.</p>
+    <p>On the Mac, press ⌘↩ in a code file and Plaintxt asks a model running on your own machine (Ollama) to fill in at the cursor. Nothing leaves the computer. No Ollama, no harm done.</p>
+    <p>Settings are a text file. Launch Plaintxt with nothing to open and it opens <code>plain.json</code>: font size, monospaced, the completion model, and the five colours as hex. Edit, save, done. Like Sublime.</p>
   </section>
 
   <section class="container">
     <h2>Agent IDE (Mac only)</h2>
-    <p>Plain on Mac is a minimalist IDE. Left sidebar lists files from your git repo. Click opens in a new tab. Center is the editor with syntax highlighting and format-on-save (prettier, black, swiftformat). Bottom tabs: chat with Ollama about your code, build output, and a terminal.</p>
+    <p>Plaintxt on Mac is a minimalist IDE. Left sidebar lists files from your git repo. Click opens in a new tab. Center is the editor with syntax highlighting and format-on-save (prettier, black, swiftformat). Bottom tabs: chat with Ollama about your code, build output, and a terminal.</p>
     <p>Chat includes file context automatically. Build and test buttons run Swift, Python tests in the output pane. Terminal runs shell commands. Nothing is saved remotely. Your machine, your agent, your code.</p>
   </section>
 
   <section class="container">
     <h2>From the command line</h2>
     <p>One binary. It opens a file in the app, or counts it.</p>
-<pre>plain notes.txt          open in Plain (.txt, .md, any code)
+<pre>plain notes.txt          open in Plaintxt (.txt, .md, any code)
 plain stat notes.txt     3 lines, 12 words, 71 chars
 cat x | plain stat       counts from stdin</pre>
   </section>
@@ -133,11 +132,11 @@ cat x | plain stat       counts from stdin</pre>
 
   <section class="container">
     <h2>No accounts, no network</h2>
-    <p>Plain never talks to a server. There is nothing to sign into and nothing to collect. Your file is the only thing on disk.</p>
+    <p>Plaintxt never talks to a server. There is nothing to sign into and nothing to collect. Your file is the only thing on disk.</p>
   </section>
 </main>
 
-<footer><div class="container">Plain · <a href="https://github.com/nulljosh/plaintxt">GitHub</a> · MIT</div></footer>
+<footer><div class="container">Plaintxt · <a href="https://github.com/nulljosh/plaintxt">GitHub</a> · MIT</div></footer>
 <script>
 // Same rules as ios/App/Stats.swift: empty doc is 1 line, no line for a trailing newline.
 (function () {
