@@ -3,6 +3,10 @@
 ## Next
 - [ ] Line numbers (drop to NSTextView/UITextView via Representable)
 - [ ] Current line highlight
+- [ ] Extend IDE panes to iOS (currently macOS only)
+
+## Ship (2026-09-12)
+- [x] IDE feature set complete. File browser sidebar for directory navigation. Agent chat pane for asking Claude about code/document inline. Output pane for formatter feedback (prettier/black/swiftformat). Terminal pane with live REPL for the document's language (Python, JavaScript, Swift). Tree-sitter syntax highlighting foundation wired (currently using regex, tree-sitter parsed ready). On-save formatting integrated with graceful fallbacks. Landing page updated with IDE hero section. Whitepaper refreshed with "why" framing.
 
 ## Done
 - 2026-09-03: v1.0.0 scaffold. DocumentGroup + TextEditor, iOS+macOS one target, CLI, Stats self-check.
