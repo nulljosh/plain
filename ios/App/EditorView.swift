@@ -4,6 +4,7 @@ struct EditorView: View {
     @Binding var document: TextDocument
     @AppStorage("monospaced") private var monospaced = false
     @AppStorage("fontSize") private var fontSize = 15.0
+    @AppStorage("formatOnSave") private var formatOnSave = false
     @State private var text = AttributedString()
     @State private var selection = AttributedTextSelection()
     @State private var completing = false
@@ -92,6 +93,11 @@ struct EditorView: View {
             Toggle(isOn: $monospaced) { Label("Monospaced", systemImage: "textformat") }
                 .help("Monospaced font")
                 .keyboardShortcut("m", modifiers: [.command, .shift])
+            #if os(macOS)
+            Toggle(isOn: $formatOnSave) { Label("Format on Save", systemImage: "sparkles") }
+                .help("Format on save with prettier/black/swiftformat")
+                .keyboardShortcut("s", modifiers: [.command, .shift])
+            #endif
             Button { fontSize = max(9, fontSize - 1) } label: { Label("Smaller", systemImage: "textformat.size.smaller") }
                 .help("Smaller text")
                 .keyboardShortcut("-", modifiers: .command)

@@ -7,7 +7,7 @@ import SwiftUI
 enum Config {
     static let defaults: [String: Any] = [
         "fontSize": 15.0, "monospaced": false, "model": "qwen2.5-coder:1.5b-base",
-        "keywordColor": "#FF2D55", "stringColor": "#34C759", "numberColor": "#FF9500",
+        "formatOnSave": false, "keywordColor": "#FF2D55", "stringColor": "#34C759", "numberColor": "#FF9500",
         "commentColor": "#8E8E93", "linkColor": "#007AFF",
     ]
 

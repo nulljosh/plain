@@ -23,7 +23,8 @@ struct TextDocument: FileDocument {
 
     var data: Data {
         if type.conforms(to: .json) { Config.apply(text) }   // saving the settings file applies it
-        return Data(text.utf8)
+        let formatted = Formatter.format(text, type: type)
+        return Data(formatted.utf8)
     }
 
     init(configuration: ReadConfiguration) throws {

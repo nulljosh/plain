@@ -19,11 +19,12 @@ extension UTType {
     }
 }
 
+// Language-specific patterns. Keyword list is shared (subset of reserved words across JS/Python/Swift/etc).
 private let keywords = try! Regex(#"\b(?:as|async|await|break|case|catch|class|const|continue|def|default|defer|do|elif|else|enum|export|extension|false|fn|for|from|func|function|guard|if|impl|import|in|init|interface|is|let|match|mod|mut|new|nil|none|not|null|or|and|package|private|protocol|pub|public|return|self|static|struct|super|switch|this|throw|throws|true|try|type|typealias|use|var|void|where|while|yield)\b"#)
-private let numbers  = try! Regex(#"\b\d[\w.]*"#)
-private let strings  = try! Regex(#""(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'|`[^`\n]*`"#)
-private let slashComments = try! Regex(#"//.*|/\*[\s\S]*?\*/"#)
-private let poundComments = try! Regex(#"#.*"#)
+private let numbers  = try! Regex(#"\b(?:0x[\da-fA-F]+|0b[01]+|0o[0-7]+|\d+\.?\d*(?:[eE][-+]?\d+)?)\b"#)
+private let strings  = try! Regex(#""(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'|`[^`\n]*`|"""[\s\S]*?"""|'''[\s\S]*?'''"#)
+private let slashComments = try! Regex(#"//[^\n]*|/\*[\s\S]*?\*/"#)
+private let poundComments = try! Regex(#"#[^\n]*"#)
 
 private let heading  = try! Regex(#"(?m)^#{1,6} .*$"#)
 private let bold     = try! Regex(#"\*\*[^*\n]+\*\*|__[^_\n]+__"#)
