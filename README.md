@@ -2,7 +2,7 @@
 
 # plain
 
-![version](https://img.shields.io/badge/version-v1.0.0-blue) ![license](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fplain-black?logo=github)](https://github.com/nulljosh/plain)
+![version](https://img.shields.io/badge/version-v1.0.0-blue) ![license](https://img.shields.io/badge/license-MIT-green) [![GitHub](https://img.shields.io/badge/GitHub-nulljosh%2Fplaintxt-black?logo=github)](https://github.com/nulljosh/plaintxt)
 
 They don't make them like Sublime Text anymore. Editors are a div soup, a browser in a trench coat, or a subscription.
 

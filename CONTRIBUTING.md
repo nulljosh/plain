@@ -3,7 +3,7 @@
 ## Setup
 
 ```
-git clone https://github.com/nulljosh/plain.git
+git clone https://github.com/nulljosh/plaintxt.git
 cd plain
 npm install
 ```
