@@ -23,23 +23,36 @@ struct EditorView: View {
     }
 
     var body: some View {
-        TextEditor(text: $text, selection: $selection)
-            // Colour lives in the view; the document stays a String.
-            .onChange(of: text) { if String(text.characters) != document.text { document.text = String(text.characters); recolor() } }
-            .onChange(of: document.text) { if String(text.characters) != document.text { text = AttributedString(document.text); recolor() } }  // undo, revert, iCloud
-            .onChange(of: fontSize) { recolor() }
-            .onChange(of: monospaced) { recolor() }
-            .lineSpacing(fontSize * 0.25)
-            .autocorrectionDisabled()
-            #if os(iOS)
-            .textInputAutocapitalization(.never)
-            .scrollDismissesKeyboard(.interactively)
-            #endif
-            .scrollContentBackground(.hidden)
-            .padding(.horizontal, 16)
-            .padding(.top, 8)
-            .safeAreaInset(edge: .bottom) { footer }
-            .toolbar { toolbar }
+        #if os(macOS)
+        HSplitView {
+            FileListView(document: $document)
+            editorPane
+        }
+        #else
+        editorPane
+        #endif
+    }
+
+    private var editorPane: some View {
+        VStack(spacing: 0) {
+            TextEditor(text: $text, selection: $selection)
+                // Colour lives in the view; the document stays a String.
+                .onChange(of: text) { if String(text.characters) != document.text { document.text = String(text.characters); recolor() } }
+                .onChange(of: document.text) { if String(text.characters) != document.text { text = AttributedString(document.text); recolor() } }  // undo, revert, iCloud
+                .onChange(of: fontSize) { recolor() }
+                .onChange(of: monospaced) { recolor() }
+                .lineSpacing(fontSize * 0.25)
+                .autocorrectionDisabled()
+                #if os(iOS)
+                .textInputAutocapitalization(.never)
+                .scrollDismissesKeyboard(.interactively)
+                #endif
+                .scrollContentBackground(.hidden)
+                .padding(.horizontal, 16)
+                .padding(.top, 8)
+            footer
+        }
+        .toolbar { toolbar }
     }
 
     // Ask the local model to fill in at the cursor. Inserts at wherever the cursor is when the answer arrives.
