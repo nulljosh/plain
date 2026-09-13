@@ -72,7 +72,7 @@ footer { border-top: 1px solid var(--border); padding: 2.5rem 0; color: var(--te
   <div class="container">
     <img class="hero-icon" src="icon.svg" alt="Plain icon" width="88" height="88">
     <h1>Plain</h1>
-    <p class="tagline">A text editor that writes no editor code. Text, Markdown, code: open it, type, done. Mac, iPhone, iPad, and a command line.</p>
+    <p class="tagline">Text editor + agent IDE. Syntax highlighting, on-save formatting, file browser, chat with your code. Mac, iPhone, iPad, and CLI.</p>
     <div class="cta">
       <a class="btn" href="https://github.com/nulljosh/plain">Source on GitHub</a>
       <a class="btn ghost" href="#why">Why</a>
@@ -109,6 +109,12 @@ footer { border-top: 1px solid var(--border); padding: 2.5rem 0; color: var(--te
   </section>
 
   <section class="container">
+    <h2>Agent IDE (Mac only)</h2>
+    <p>Plain on Mac is a minimalist IDE. Left sidebar lists files from your git repo. Click opens in a new tab. Center is the editor with syntax highlighting and format-on-save (prettier, black, swiftformat). Bottom tabs: chat with Ollama about your code, build output, and a terminal.</p>
+    <p>Chat includes file context automatically. Build and test buttons run Swift, Python tests in the output pane. Terminal runs shell commands. Nothing is saved remotely. Your machine, your agent, your code.</p>
+  </section>
+
+  <section class="container">
     <h2>From the command line</h2>
     <p>One binary. It opens a file in the app, or counts it.</p>
 <pre>plain notes.txt          open in Plain (.txt, .md, any code)
@@ -119,9 +125,9 @@ cat x | plain stat       counts from stdin</pre>
   <section class="container">
     <h2>Everywhere you are</h2>
     <div class="grid">
-      <div class="card"><h3>Mac</h3><p>Tabs, Open Recent, versions, autosave. All from the document system.</p></div>
-      <div class="card"><h3>iPhone &amp; iPad</h3><p>Any file in the Files app or iCloud Drive. Split view on iPad.</p></div>
-      <div class="card"><h3>Terminal</h3><p>Build it with one swiftc line. No package manager, no runtime.</p></div>
+      <div class="card"><h3>Mac</h3><p>File browser, tabs, versions, autosave. Chat with your code. Build and terminal panes. Format on save.</p></div>
+      <div class="card"><h3>iPhone &amp; iPad</h3><p>Any file in the Files app or iCloud Drive. Split view on iPad. Syntax highlighting everywhere.</p></div>
+      <div class="card"><h3>Terminal</h3><p>Build with one swiftc line. Stats mode counts lines, words, chars. No package manager, no runtime.</p></div>
     </div>
   </section>
 
