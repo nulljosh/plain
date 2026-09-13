@@ -26,11 +26,23 @@ struct EditorView: View {
         #if os(macOS)
         HSplitView {
             FileListView(document: $document)
-            editorPane
+            macosContent
         }
         #else
         editorPane
         #endif
+    }
+
+    private var macosContent: some View {
+        VStack(spacing: 0) {
+            editorPane
+            Divider()
+            #if os(macOS)
+            ChatView(document: $document)
+            #else
+            EmptyView()
+            #endif
+        }
     }
 
     private var editorPane: some View {
